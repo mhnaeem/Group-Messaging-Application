@@ -39,14 +39,20 @@ public class Forum_GUI extends JFrame {
         setVisible(true);
 
         class SayHello extends TimerTask{
-            public void run(){
-                List<Post> posts = Group.userInGroup(currentUser).getGroupPosts();
-                if(posts.size() != 0){
-                    for (Post pos: posts.subList(indexOfLastPost, posts.size())){
-                        stB.append(pos.getPost());
+            public void run() {
+                if (Group.getGroupList().size() != 0) {
+                    if (Group.userInGroup(currentUser) == Group.getGroupList().get(0)) {
+                        //TODO: Add other things for people not in groups
+                    } else {
+                        List<Post> posts = Group.userInGroup(currentUser).getGroupPosts();
+                        if (posts.size() != 0) {
+                            for (Post pos : posts.subList(indexOfLastPost, posts.size())) {
+                                stB.append(pos.getPost());
+                            }
+                            indexOfLastPost = posts.size();
+                            mainMessages.setText(stB.toString());
+                        }
                     }
-                    indexOfLastPost = posts.size();
-                    mainMessages.setText(stB.toString());
                 }
             }
         }

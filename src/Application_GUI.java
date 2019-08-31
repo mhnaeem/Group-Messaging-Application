@@ -171,18 +171,7 @@ public class Application_GUI extends JFrame {
         );
     }
     public static void main(String args[]){
-        User u1 = new User("1","1","","");
-        User u2 = new User("2","2","","");
-        User u3 = new User("3","3","","");
-        User u4 = new User("4","4","","");
-        Group g1 = new Group("g1");
-        Group g2 = new Group("g2");
-        g1.addUser(u1);
-        g1.addUser(u2);
-        g2.addUser(u3);
-        g2.addUser(u4);
         new Application_GUI();
-
     }
 }
 

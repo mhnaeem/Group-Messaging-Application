@@ -11,7 +11,12 @@ public class Group
     static private ArrayList<Group> groups = new ArrayList<>();
     private ArrayList<User> userList;
     private ArrayList<Post> groupPosts = new ArrayList<>();
-    
+
+    static {
+        if (groups.size() == 0){
+            new Group("Default");
+        }
+    }
     /**
      * Constructor for objects of class Group
      */
@@ -47,6 +52,13 @@ public class Group
         return groups;    
     }
     public void addUser(User usr){
+        for(Group grp: groups){
+            for(User user: grp.getUserList()){
+                if (user.equals(usr)){
+                    grp.removeUser(usr);
+                }
+            }
+        }
         userList.add(usr);    
     }
     public void removeUser(User usr){
