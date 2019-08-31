@@ -13,13 +13,10 @@ public class User
     static private ArrayList<User> usersList = new ArrayList<>();
     
     // Username is only created once and cannot be changed
-    private String USERNAME;  
-    
+    private String USERNAME;
     private String firstName, lastName, password;
-    
     //DD-MMM-YYYY
     private Date dob;
-    
     private boolean admin = false;
     
     public User(String usrNm, String pass, String fName, String lName){
@@ -61,6 +58,7 @@ public class User
             password = pass;
         }
         else{
+            //TODO: Display Error in a dialog box
             System.out.println("Username already exists. Try Again!");
         }
     }
@@ -69,9 +67,11 @@ public class User
             userMap.put(usrNm, newPass);
         }
         else if(!userMap.get(usrNm).equals(oldPass)){
+            //TODO: Display Error in a dialog box
             System.out.println("Old password is incorrect.");
         }
         else{
+            //TODO: Display Error in a dialog box
             System.out.println("New Password Cannot Be Set. Try Again!");
         }        
     }
@@ -98,7 +98,7 @@ public class User
                 return usr;
             }
         }
-        //Throw error later
+        //TODO: Throw error later
         System.out.println("Username isn't valid");
         return usersList.get(0);
     }

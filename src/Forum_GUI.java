@@ -1,20 +1,8 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.WindowConstants;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.util.ArrayList;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.TimerTask;
+import java.util.Timer;
 
 /**
  * Write a description of class Chat_GUI here.
@@ -32,11 +20,15 @@ public class Forum_GUI extends JFrame {
     private JMenuItem pasteMenuItem, logOutMenuItem, newUserMenuItem, signInMenuItem, createGroupMenuItem;
     private User currentUser;
     private JScrollPane scPane1, scPane2;
+    private StringBuilder stB;
+    private int indexOfLastPost;
     
     /**
      * Creates new form Frame
      */
     public Forum_GUI(User usr) {
+        stB = new StringBuilder();
+        indexOfLastPost = 0;
         currentUser = usr;
         initialiazeComponents();
         createLayout();
@@ -45,20 +37,23 @@ public class Forum_GUI extends JFrame {
         addButtonFunctionalities();
         pack();
         setVisible(true);
-        
-        Runnable msgBoardRunnable = new Runnable() {
-            public void run() {
-                StringBuilder stB = new StringBuilder();
-                for (Post pos : Group.userInGroup(currentUser).getGroupPosts()){
-                    stB.append(pos.getPost());   
+
+        class SayHello extends TimerTask{
+            public void run(){
+                List<Post> posts = Group.userInGroup(currentUser).getGroupPosts();
+                if(posts.size() != 0){
+                    for (Post pos: posts.subList(indexOfLastPost, posts.size())){
+                        stB.append(pos.getPost());
+                    }
+                    indexOfLastPost = posts.size();
+                    mainMessages.setText(stB.toString());
                 }
-                mainMessages.setText(stB.toString());                 
             }
-        };
+        }
 
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(msgBoardRunnable, 0, 3, TimeUnit.SECONDS);
-
+        // And From your main() method or any other method
+        Timer timer = new Timer();
+        timer.schedule(new SayHello(), 0, 1000);
     }
                          
     private void initialiazeComponents() {
@@ -83,12 +78,6 @@ public class Forum_GUI extends JFrame {
         sendBtn.addActionListener(
         (ActionEvent ev) -> {
             Post ps = new Message_Post(currentUser, msgWriter.getText());
-            StringBuilder stB = new StringBuilder();
-            for (Post pos : Group.userInGroup(currentUser).getGroupPosts()){
-                System.out.println(pos.getPost());
-                stB.append(pos.getPost());   
-            }
-            mainMessages.setText(stB.toString());                    
         });
     }
     private void addMenu(){

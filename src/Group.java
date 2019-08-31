@@ -23,6 +23,7 @@ public class Group
             userList = new ArrayList<>();            
         }
         else{
+            //TODO: Group already exists error, dialog box
             System.out.println("Group Constructor Error!");    
         }
     }
@@ -65,6 +66,7 @@ public class Group
                 }
             }
         }
+        //TODO: Fix if no group found
         System.out.println("Group not found");
         return groups.get(0);
     }
