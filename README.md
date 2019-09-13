@@ -10,4 +10,4 @@
 <br>
 <h2>Here is a screenshot of the running application:</h2>
 
-![Alt text](/Group_Messaging_Application.PNG?raw=true "Optional Title")
+![Alt text](/Group_Messaging_Application.PNG?raw=true "Group_Messaging_Application.PNG")
